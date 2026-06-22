@@ -1,5 +1,5 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbw_25M-XnOIO9xh8yQwIYJwZP60zkwDInirdC5Jj0UjX8giKMZQMUPMFIue5aJgnVYx/exec";
-
+const API_TIMEOUT_MS = 370000;
 const idsInput = document.getElementById("idsInput");
 const searchBtn = document.getElementById("searchBtn");
 const clearBtn = document.getElementById("clearBtn");
