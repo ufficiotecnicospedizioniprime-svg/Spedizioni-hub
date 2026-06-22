@@ -73,11 +73,10 @@ function requestApi(ids) {
 
     url.searchParams.set("ids", ids.join(","));
     url.searchParams.set("prefix", callbackName);
-
-    const timer = setTimeout(() => {
-      cleanup();
-      reject(new Error("Tempo scaduto: Apps Script non ha risposto."));
-    }, 30000);
+const timer = setTimeout(() => {
+  cleanup();
+  reject(new Error("Tempo scaduto: Apps Script ha superato il limite di circa 6 minuti."));
+}, API_TIMEOUT_MS);
 
     window[callbackName] = (data) => {
       cleanup();
