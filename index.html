@@ -1,1 +1,63 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ricerca spedizioni HUB</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Spedizioni HUB</p>
+          <h1>Ricerca misure e peso</h1>
+        </div>
+        <div id="statusBadge" class="status-badge">Pronto</div>
+      </header>
 
+      <section class="search-panel">
+        <label for="idsInput">Codici spedizione</label>
+        <textarea id="idsInput" rows="8" spellcheck="false" placeholder="1UW0MPO024566&#10;1UW0MPO024567"></textarea>
+
+        <div class="actions">
+          <button id="searchBtn" class="primary-btn" type="button">Cerca</button>
+          <button id="clearBtn" class="secondary-btn" type="button">Pulisci</button>
+          <button id="copyBtn" class="secondary-btn" type="button" disabled>Copia CSV</button>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <div><span>Richiesti</span><strong id="totalCount">0</strong></div>
+        <div><span>Trovati</span><strong id="foundCount">0</strong></div>
+        <div><span>Non trovati</span><strong id="missingCount">0</strong></div>
+      </section>
+
+      <section class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Codice</th>
+              <th>Stato</th>
+              <th>Lato 1</th>
+              <th>Lato 2</th>
+              <th>Lato 3</th>
+              <th>Peso</th>
+              <th>File HUB</th>
+              <th>Data file</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody">
+            <tr>
+              <td colspan="8" class="empty-state">Nessuna ricerca eseguita.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
