@@ -4,6 +4,8 @@ const idsInput = document.getElementById("idsInput");
 const searchBtn = document.getElementById("searchBtn");
 const clearBtn = document.getElementById("clearBtn");
 const copyBtn = document.getElementById("copyBtn");
+const dateFrom = document.getElementById("dateFrom");
+const dateTo = document.getElementById("dateTo");
 const resultsBody = document.getElementById("resultsBody");
 const statusBadge = document.getElementById("statusBadge");
 const totalCount = document.getElementById("totalCount");
@@ -36,6 +38,7 @@ function parseIds(value) {
 
 async function handleSearch() {
   const ids = parseIds(idsInput.value);
+  const filters = getDateFilters();
 
   if (ids.length === 0) {
     setStatus("Inserisci almeno un codice");
@@ -43,11 +46,18 @@ async function handleSearch() {
     return;
   }
 
+  if (filters.error) {
+    setStatus("Periodo non valido");
+    renderEmpty(filters.error);
+    hideReport();
+    return;
+  }
+
   setLoading(true);
   setStatus("Ricerca in corso...");
 
   try {
-    const data = await requestApi(ids);
+    const data = await requestApi(ids, filters);
 
     if (!data.ok) {
       throw new Error(data.errore || "Risposta API non valida.");
@@ -71,7 +81,7 @@ async function handleSearch() {
   }
 }
 
-function requestApi(ids) {
+function requestApi(ids, filters) {
   return new Promise((resolve, reject) => {
     const callbackName = "__hubCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
     const script = document.createElement("script");
@@ -79,6 +89,14 @@ function requestApi(ids) {
 
     url.searchParams.set("ids", ids.join(","));
     url.searchParams.set("prefix", callbackName);
+
+    if (filters.from) {
+      url.searchParams.set("dal", filters.from);
+    }
+
+    if (filters.to) {
+      url.searchParams.set("al", filters.to);
+    }
 
     const timer = setTimeout(() => {
       cleanup();
@@ -189,6 +207,8 @@ function csvCell(value) {
 
 function clearAll() {
   idsInput.value = "";
+  dateFrom.value = "";
+  dateTo.value = "";
   lastResults = [];
   copyBtn.disabled = true;
   updateSummary([]);
@@ -204,6 +224,21 @@ function setLoading(isLoading) {
 
 function setStatus(message) {
   statusBadge.textContent = message;
+}
+
+function getDateFilters() {
+  const from = dateFrom.value || "";
+  const to = dateTo.value || "";
+
+  if (from && to && from > to) {
+    return {
+      from,
+      to,
+      error: "La data Dal non puo' essere successiva alla data Al."
+    };
+  }
+
+  return { from, to, error: "" };
 }
 
 function renderReport(results) {
