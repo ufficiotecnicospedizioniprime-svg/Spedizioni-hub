@@ -21,6 +21,17 @@
         <label for="idsInput">Codici spedizione</label>
         <textarea id="idsInput" rows="8" spellcheck="false" placeholder="1UW0MPO024566&#10;1UW0MPO024567"></textarea>
 
+        <div class="filters-row">
+          <div class="field">
+            <label for="dateFrom">Dal</label>
+            <input id="dateFrom" type="date">
+          </div>
+          <div class="field">
+            <label for="dateTo">Al</label>
+            <input id="dateTo" type="date">
+          </div>
+        </div>
+
         <div class="actions">
           <button id="searchBtn" class="primary-btn" type="button">Cerca</button>
           <button id="clearBtn" class="secondary-btn" type="button">Pulisci</button>
@@ -55,6 +66,16 @@
           </tbody>
         </table>
       </section>
+
+      <section id="reportTools" class="report-tools" hidden>
+        <div>
+          <p class="eyebrow">Documento PDF</p>
+          <h2>Anteprima rilevazione</h2>
+        </div>
+        <button id="printBtn" class="primary-btn" type="button">Stampa / salva PDF</button>
+      </section>
+
+      <section id="reportPreview" class="report-preview" hidden></section>
     </section>
   </main>
 
